@@ -16,12 +16,16 @@ class Post extends LongKeyedMapper[Post] with IdPK with CreatedUpdated {
   object content extends MappedText(this)
   object url extends MappedString(this, 512)
   object author extends LongMappedMapper(this, User) {
+    override def defaultValue = User.currentUser match {
+      case Full(user) => user.id.is
+      case _ => 0L
+    }
     override def validSelectValues = 
       Full(User.findMap(OrderBy(User.id, Ascending)) {
         case r: User => Full(r.id.is -> r.email.is)
       })
 	}
-	object category extends 
+	//object category extends 
 
 }
 

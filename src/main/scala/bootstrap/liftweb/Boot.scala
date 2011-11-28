@@ -29,18 +29,17 @@ class Boot {
     // Use Lift's Mapper ORM to populate the database
     // you don't need to use Mapper to use Lift... use
     // any ORM you want
-    Schemifier.schemify(true, Schemifier.infoF _, User)
+    Schemifier.schemify(true, Schemifier.infoF _, User, Post, Category, PostCategory, Comment)
   
     // where to search snippet
-    LiftRules.addToPackages("org.nigmalabs")
+    LiftRules.addToPackages("org.nigmalabs.news")
 
     // build sitemap
-    val entries = List(Menu("Home") / "index") :::
-                  List(Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
-                       "Static Content"))) :::
-                  // the User management menu items
-                  User.sitemap :::
-                  Nil
+    val entries = 
+      List(
+        Menu.i("Home") / "index",
+        Menu.i("Create post") / "post" / "create" >> User.loginFirst
+        ) ::: User.sitemap ::: Nil
     
     LiftRules.uriNotFound.prepend(NamedPF("404handler"){
       case (req,failure) => NotFoundAsTemplate(

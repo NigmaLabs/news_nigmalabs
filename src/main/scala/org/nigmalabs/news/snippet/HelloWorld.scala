@@ -1,4 +1,4 @@
-package org.nigmalabs {
+package org.nigmalabs.news {
 package snippet {
 
 import scala.xml.{NodeSeq, Text}
