@@ -40,3 +40,5 @@ lib_managed/*
 project/*
 src/test/*
 src/main/resources/props/*
+
+*.*~
